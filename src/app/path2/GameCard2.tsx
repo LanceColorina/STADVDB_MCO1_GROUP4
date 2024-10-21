@@ -24,9 +24,9 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
       <img src={game.header_image} alt={game.game_name} className="w-full h-48 object-cover rounded-t-lg mb-4" />
       <h3 className="text-xl font-bold text-white mb-2">{game.game_name}</h3>
       <div className="text-gray-400 space-y-1">
-        <p>Windows: <span className={`${game.windows ? 'text-green-500' : 'text-red-500'}`}>{game.windows ? 'Yes' : 'No'}</span></p>
-        <p>Mac: <span className={`${game.mac ? 'text-green-500' : 'text-red-500'}`}>{game.mac ? 'Yes' : 'No'}</span></p>
-        <p>Linux: <span className={`${game.linux ? 'text-green-500' : 'text-red-500'}`}>{game.linux ? 'Yes' : 'No'}</span></p>
+        <p>Windows: <span className={`${game.windows ? 'text-green-500' : 'text-red-500'}`}>{game.windows === 'True' ? 'Yes' : 'No'}</span></p>
+        <p>Mac: <span className={`${game.mac ? 'text-green-500' : 'text-red-500'}`}>{game.mac === 'True' ? 'Yes' : 'No'}</span></p>
+        <p>Linux: <span className={`${game.linux ? 'text-green-500' : 'text-red-500'}`}>{game.linux === 'True' ? 'Yes' : 'No'}</span></p>
         <p>Positive Reviews: <span className="text-green-400">{game.total_positive_reviews}</span></p>
         <p>Negative Reviews: <span className="text-red-400">{game.total_negative_reviews}</span></p>
       </div>
