@@ -19,19 +19,21 @@ interface GameCardProps {
 }
 
 const GameCard: React.FC<GameCardProps> = ({ game }) => {
-  const formattedPrice = typeof game.price === 'number' ? game.price.toFixed(2) : 'N/A';
 
   return (
-    <div className="game-card" key={game.app_id}>
-      <Link href={game.website}>
-        <img src={game.header_image} alt={game.game_name} className="w-full h-auto" />
-        <h3 className="text-lg font-bold">{game.game_name}</h3>
-        <p>Release Date: {game.release_date}</p>
-        <p>Price: ${formattedPrice}</p>
-        <p>Average Playtime: {game.average_playtime_forever} mins</p>
-        <p>Positive Feedback: {game.positive_feedback_percentage}%</p>
-      </Link>
-    </div>
+    <div className="game-card bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" key={game.app_id}>
+    <Link href={game.website} className="text-white">
+      <img src={game.header_image} alt={game.game_name} className="w-full h-56 object-cover" />
+      <div className="p-4">
+        <h3 className="text-xl font-bold mb-2">{game.game_name}</h3>
+        <p className="text-gray-400 mb-1">Release Date: <span className="text-white">{game.release_date}</span></p>
+        <p className="text-gray-400 mb-1">Price: <span className="text-white">${game.price}</span></p>
+        <p className="text-gray-400 mb-1">Average Playtime: <span className="text-white">{game.average_playtime_forever} mins</span></p>
+        <p className="text-gray-400">Positive Feedback: <span className="text-green-400">{game.positive_feedback_percentage}%</span></p>
+      </div>
+    </Link>
+  </div>
+
   );
 };
 

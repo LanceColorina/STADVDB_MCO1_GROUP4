@@ -28,69 +28,71 @@ const FilterForm: React.FC<FilterFormProps> = ({
   onSubmit,
 }) => {
   return (
-    <form onSubmit={onSubmit} className="mb-4 flex flex-col space-y-4">
-      <div>
-        <label>
-          Windows:
-          <input
-            type="checkbox"
-            checked={windows}
-            onChange={(e) => setWindows(e.target.checked)}
-            className="ml-2"
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Mac:
-          <input
-            type="checkbox"
-            checked={mac}
-            onChange={(e) => setMac(e.target.checked)}
-            className="ml-2"
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Linux:
-          <input
-            type="checkbox"
-            checked={linux}
-            onChange={(e) => setLinux(e.target.checked)}
-            className="ml-2"
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Total Positive Reviews:
-          <input
-            type="number"
-            value={total_positive_reviews}
-            onChange={(e) => setPos(Number(e.target.value) || '')}
-            className="ml-2 p-1 border border-gray-300 rounded"
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Total Negative Reviews:
-          <input
-            type="number"
-            value={total_negative_reviews}
-            onChange={(e) => setNeg(Number(e.target.value) || '')}
-            className="ml-2 p-1 border border-gray-300 rounded"
-          />
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="mt-4 p-2 bg-blue-500 text-white rounded shadow"
-      >
-        Apply Filters
-      </button>
-    </form>
+    <form onSubmit={onSubmit} className="mb-4 flex flex-col space-y-4 text-white font-medium max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+  <div className="flex items-center justify-between">
+    <label className="flex items-center">
+      <span className="mr-2">Windows:</span>
+      <input
+        type="checkbox"
+        checked={windows}
+        onChange={(e) => setWindows(e.target.checked)}
+        className="form-checkbox h-5 w-5 text-blue-500"
+      />
+    </label>
+  </div>
+
+  <div className="flex items-center justify-between">
+    <label className="flex items-center">
+      <span className="mr-2">Mac:</span>
+      <input
+        type="checkbox"
+        checked={mac}
+        onChange={(e) => setMac(e.target.checked)}
+        className="form-checkbox h-5 w-5 text-blue-500"
+      />
+    </label>
+  </div>
+
+  <div className="flex items-center justify-between">
+    <label className="flex items-center">
+      <span className="mr-2">Linux:</span>
+      <input
+        type="checkbox"
+        checked={linux}
+        onChange={(e) => setLinux(e.target.checked)}
+        className="form-checkbox h-5 w-5 text-blue-500"
+      />
+    </label>
+  </div>
+
+  <div className="flex flex-col">
+    <label className="mb-1">Total Positive Reviews:</label>
+    <input
+      type="number"
+      value={total_positive_reviews}
+      onChange={(e) => setPos(Number(e.target.value) || '')}
+      className="p-2 border border-gray-300 rounded bg-gray-700 text-white"
+    />
+  </div>
+
+  <div className="flex flex-col">
+    <label className="mb-1">Total Negative Reviews:</label>
+    <input
+      type="number"
+      value={total_negative_reviews}
+      onChange={(e) => setNeg(Number(e.target.value) || '')}
+      className="p-2 border border-gray-300 rounded bg-gray-700 text-white"
+    />
+  </div>
+
+  <button
+    type="submit"
+    className="mt-4 p-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-colors"
+  >
+    Apply Filters
+  </button>
+</form>
+
   );
 };
 
