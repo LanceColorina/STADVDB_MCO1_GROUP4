@@ -5,6 +5,12 @@ export async function GET(req: NextRequest){
     try {
         const url = new URL(req.url);
         const db = await createConnection();
+
+        const date = url.searchParams.get('release_date') || null;
+        const minPrice = url.searchParams.get('price') || null;
+        const maxPrice = url.searchParams.get('price') || null;
+        const minPlaytime = url.searchParams.get('average_playtime_forever') || null;
+
         const sql = `SELECT gi.game_name AS game_name, 
                             gi.header_image AS header_image, 
                             gi.website AS website, 
@@ -19,13 +25,16 @@ export async function GET(req: NextRequest){
                         JOIN statistics s ON g.statistic_id = s.statistic_id
                         JOIN feedbacks f ON g.feedback_id = f.feedback_id
                         WHERE (f.positive + f.negative) > 0 
-                        AND (gi.release_date >= 'INSERT DATE' OR 'INSERT DATE' IS NULL) -- this is the filter for release date
-                        AND (gi.price BETWEEN PRICE AND PRICE OR PRICE IS NULL) -- filter for the price range
-                        AND (s.average_playtime_forever > PLAYTIME OR PLAYTIME IS NULL) -- filter for the average playtime
+                        AND (gi.release_date >= ? OR ? IS NULL) -- this is the filter for release date
+                        AND (gi.price BETWEEN ? AND ? OR ? IS NULL) -- filter for the price range
+                        AND (s.average_playtime_forever > ? OR ? IS NULL) -- filter for the average playtime
                         ORDER BY s.average_playtime_forever DESC, f.positive DESC
                         LIMIT 10;
                     `;
-        const [games] = await db.query(sql);
+        const [games] = await db.query(sql, [
+            date, date, 
+            minPrice, maxPrice, minPrice, 
+            minPlaytime, minPlaytime]);
         return NextResponse.json(games);
     }catch(error){
         console.log(error);
