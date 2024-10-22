@@ -15,8 +15,8 @@ export default function Path2() {
   const [windowsPlatform, setWindows] = useState<boolean>(false); 
   const [macPlatform, setMac] = useState<boolean>(false);         
   const [linuxPlatform, setLinux] = useState<boolean>(false); // changed to boolean
-  const [positiveReviews, setPos] = useState<string>("")
-  const [negativeReviews, setNeg] = useState<string>("")
+  const [positiveReviews, setPos] = useState<number | ''>('');
+  const [negativeReviews, setNeg] = useState<number | ''>('');
 
   const fetchGames = async () => {
     try {
