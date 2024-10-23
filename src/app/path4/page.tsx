@@ -37,16 +37,33 @@ export default function Path2() {
   }, [setDevelopers, setPublishers, setWindows, setMac, setLinux]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {games.map((game) => (
-        <div className="game-card bg-gray-800 p-4 rounded" key={game.app_id}>
-          <p>Developers:  {game.developers}</p>
-          <p>Publishers {game.publishers}</p>
-          <p>Windows Games: {game.windows_games}</p>
-          <p>Mac Games: {game.mac_games}</p>
-          <p>Linux Games: {game.linux_games}</p>
+        <div
+          className="game-card bg-gray-900 text-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+          key={game.app_id}
+        >
+          <ul className="space-y-2 text-sm">
+            <li>
+              <span className="font-medium">Developers:</span> {game.developers}
+            </li>
+            <li>
+              <span className="font-medium">Publishers:</span> {game.publishers}
+            </li>
+            <li>
+              <span className="font-medium">Windows Games:</span> {game.windows_games}
+            </li>
+            <li>
+              <span className="font-medium">Mac Games:</span> {game.mac_games}
+            </li>
+            <li>
+              <span className="font-medium">Linux Games:</span> {game.linux_games}
+            </li>
+          </ul>
         </div>
       ))}
     </div>
+</div>
   );
 }
