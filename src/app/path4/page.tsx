@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import "./Filter.css";
 
 interface Game {
   app_id: number;
@@ -22,15 +23,10 @@ export default function Path2() {
   const [maxMac, setMaxMac] = useState<number | ''>('');
   const [minLinux, setMinLinux] = useState<number | ''>('');
   const [maxLinux, setMaxLinux] = useState<number | ''>('');
-  const[devs, setDevelopers] = useState<string>("");
-  const [pubs, setPublishers] = useState<string>("");
-  const [windowsGames, setWindows] = useState<number | ''>('');
-  const [macGames, setMac] = useState<number | ''>('');
-  const [linuxGames, setLinux] = useState<number | ''>('');
 
   const fetchGames = async () => {
     try {
-      const response = await fetch(`/api/path4?developers=${devs}&publishers=${pubs}&windows_games=${windowsGames}&mac_games=${macGames}&linux_games=${linuxGames}`);
+      const response = await fetch(`/api/path4`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -45,10 +41,6 @@ export default function Path2() {
     e.preventDefault();
     fetchGames();
   };
-  
-  useEffect(() => {
-    fetchGames();
-  }, [setDevelopers, setPublishers, setWindows, setMac, setLinux]);
 
   const filterGames = (game: Game) => {
     if (showWindows) {
@@ -79,101 +71,104 @@ export default function Path2() {
   };
 
   return (
-    <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
+    <div className="page-container">
       {/* Filter Form */}
-      <form onSubmit={handleFilterSubmit} className="mb-8 w-full max-w-md">
-        <div className="mb-4">
-          <label className="block text-white mb-2">Platforms</label>
-          <div className="flex flex-col space-y-4">
+      <form onSubmit={handleFilterSubmit} className="filter-form">
+        <h2 className="filter-title">Filter Games by Platform</h2>
+        <div className="filter-section">
+          <label className="filter-label">Platforms</label>
+          <div className="filter-options">
             <div>
-              <label className="text-white mr-2">Windows</label>
+              <label className="filter-checkbox-label">Windows</label>
               <input
                 type="checkbox"
                 checked={showWindows}
                 onChange={() => setShowWindows(!showWindows)}
+                className="filter-checkbox"
               />
               {showWindows && (
-                <div className="flex space-x-2 mt-2">
+                <div className="filter-range">
                   <input
                     type="number"
-                    placeholder="Min Windows"
+                    placeholder="Min"
                     value={minWindows}
                     onChange={(e) => setMinWindows(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-20 p-2"
+                    className="filter-input"
                   />
                   <input
                     type="number"
-                    placeholder="Max Windows"
+                    placeholder="Max"
                     value={maxWindows}
                     onChange={(e) => setMaxWindows(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-20 p-2"
+                    className="filter-input"
                   />
                 </div>
               )}
             </div>
             <div>
-              <label className="text-white mr-2">Mac</label>
+              <label className="filter-checkbox-label">Mac</label>
               <input
                 type="checkbox"
                 checked={showMac}
                 onChange={() => setShowMac(!showMac)}
+                className="filter-checkbox"
               />
               {showMac && (
-                <div className="flex space-x-2 mt-2">
+                <div className="filter-range">
                   <input
                     type="number"
-                    placeholder="Min Mac"
+                    placeholder="Min"
                     value={minMac}
                     onChange={(e) => setMinMac(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-20 p-2"
+                    className="filter-input"
                   />
                   <input
                     type="number"
-                    placeholder="Max Mac"
+                    placeholder="Max"
                     value={maxMac}
                     onChange={(e) => setMaxMac(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-20 p-2"
+                    className="filter-input"
                   />
                 </div>
               )}
             </div>
             <div>
-              <label className="text-white mr-2">Linux</label>
+              <label className="filter-checkbox-label">Linux</label>
               <input
                 type="checkbox"
                 checked={showLinux}
                 onChange={() => setShowLinux(!showLinux)}
+                className="filter-checkbox"
               />
               {showLinux && (
-                <div className="flex space-x-2 mt-2">
+                <div className="filter-range">
                   <input
                     type="number"
-                    placeholder="Min Linux"
+                    placeholder="Min"
                     value={minLinux}
                     onChange={(e) => setMinLinux(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-20 p-2"
+                    className="filter-input"
                   />
                   <input
                     type="number"
-                    placeholder="Max Linux"
+                    placeholder="Max"
                     value={maxLinux}
                     onChange={(e) => setMaxLinux(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-20 p-2"
+                    className="filter-input"
                   />
                 </div>
               )}
             </div>
           </div>
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+        <button type="submit" className="filter-button">
           Filter Games
         </button>
       </form>
-
       {/* Display Filtered Games */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {games
-          .filter(filterGames) // Apply client-side filtering
+          .filter(filterGames)
           .map((game) => (
             <div className="game-card bg-gray-800 p-4 rounded" key={game.app_id}>
               <div className="text-white">
