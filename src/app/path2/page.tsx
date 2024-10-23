@@ -36,16 +36,33 @@ export default function Path2() {
   }, [windowsPlatform, macPlatform, linuxPlatform, positiveReviews, negativeReviews]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {games.map((game) => (
-        <div className="game-card bg-gray-800 p-4 rounded" key={game.app_id}>
-          <p>Windows: {game.windows}</p>
-          <p>Mac: {game.mac}</p>
-          <p>Linux: {game.linux}</p>
-          <p>Positive Reviews: {game.total_positive_reviews}</p>
-          <p>Negative Reviews: {game.total_negative_reviews}</p>
+        <div
+          className="game-card bg-gray-900 text-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out"
+          key={game.app_id}
+        >
+          <ul className="space-y-2 text-sm">
+            <li>
+              <span className="font-medium">Windows:</span> {game.windows}
+            </li>
+            <li>
+              <span className="font-medium">Mac:</span> {game.mac}
+            </li>
+            <li>
+              <span className="font-medium">Linux:</span> {game.linux}
+            </li>
+            <li>
+              <span className="font-medium">Positive Reviews:</span> {game.total_positive_reviews}
+            </li>
+            <li>
+              <span className="font-medium">Negative Reviews:</span> {game.total_negative_reviews}
+            </li>
+          </ul>
         </div>
       ))}
     </div>
+</div>
   );
 }

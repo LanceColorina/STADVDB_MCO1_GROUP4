@@ -24,18 +24,26 @@ export default function Home() {
         {/* Hidden prompt with buttons */}
         {showPrompt && (
           <div className="mt-4 space-y-2">
-            <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              <Link href="/path1">Go to Path 1</Link>
-            </button>
-            <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              <Link href="/path2">Go to Path 2</Link>
-            </button>
-            <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              <Link href="/path3">Go to Path 3</Link>
-            </button>
-            <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              <Link href="/path4">Go to Path 4</Link>
-            </button>
+            <Link href="/path1">
+              <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 m-2">
+                Go to Path 1
+              </button>
+            </Link>
+            <Link href="/path2">
+              <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 m-2">
+                Go to Path 2
+              </button>
+            </Link>
+            <Link href="/path3">
+              <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 m-2">
+                Go to Path 3
+              </button>
+            </Link>
+            <Link href="/path4" >
+              <button className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 m-2">
+                Go to Path 4
+              </button>
+            </Link>
           </div>
         )}
       </div>
