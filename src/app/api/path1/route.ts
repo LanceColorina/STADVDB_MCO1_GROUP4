@@ -1,15 +1,15 @@
-import {createConnection} from '@/utils/db'
-import { NextResponse,NextRequest } from 'next/server'
+import { createConnection } from '@/utils/db';
+import { NextResponse, NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest){
+export async function GET(req: NextRequest) {
     try {
         const url = new URL(req.url);
         const db = await createConnection();
 
         const date = url.searchParams.get('release_date') || null;
-        const minPrice = url.searchParams.get('price') || null;
-        const maxPrice = url.searchParams.get('price') || null;
-        const minPlaytime = url.searchParams.get('average_playtime_forever') || null;
+        const minPrice = url.searchParams.get('min_price') ? parseFloat(url.searchParams.get('min_price')) : null;
+        const maxPrice = url.searchParams.get('max_price') ? parseFloat(url.searchParams.get('max_price')) : null; 
+        const minPlaytime = url.searchParams.get('average_playtime_forever') ? parseInt(url.searchParams.get('average_playtime_forever')) : null; 
 
         const sql = `SELECT gi.game_name AS game_name, 
                             gi.header_image AS header_image, 
@@ -25,19 +25,21 @@ export async function GET(req: NextRequest){
                         JOIN statistics s ON g.statistic_id = s.statistic_id
                         JOIN feedbacks f ON g.feedback_id = f.feedback_id
                         WHERE (f.positive + f.negative) > 0 
-                        AND (gi.release_date >= ? OR ? IS NULL) -- this is the filter for release date
-                        AND (gi.price BETWEEN ? AND ? OR ? IS NULL) -- filter for the price range
-                        AND (s.average_playtime_forever > ? OR ? IS NULL) -- filter for the average playtime
+                        AND (gi.release_date >= ? OR ? IS NULL) -- filter for release date
+                        AND (gi.price BETWEEN ? AND ? OR (? IS NULL AND ? IS NULL)) -- filter for price range
+                        AND (s.average_playtime_forever >= ? OR ? IS NULL) -- filter for average playtime
                         ORDER BY s.average_playtime_forever DESC, f.positive DESC
-                        LIMIT 10;
-                    `;
+                        LIMIT 10;`;
+
         const [games] = await db.query(sql, [
             date, date, 
-            minPrice, maxPrice, minPrice, 
-            minPlaytime, minPlaytime]);
+            minPrice, maxPrice, minPrice, maxPrice, 
+            minPlaytime, minPlaytime
+        ]);
+
         return NextResponse.json(games);
-    }catch(error){
+    } catch (error) {
         console.log(error);
-        return NextResponse.json({error: error})
+        return NextResponse.json({ error: error });
     }
 }
