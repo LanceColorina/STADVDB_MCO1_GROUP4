@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Game {
   app_id: number;
@@ -22,10 +22,15 @@ export default function Path2() {
   const [maxMac, setMaxMac] = useState<number | ''>('');
   const [minLinux, setMinLinux] = useState<number | ''>('');
   const [maxLinux, setMaxLinux] = useState<number | ''>('');
+  const[devs, setDevelopers] = useState<string>("");
+  const [pubs, setPublishers] = useState<string>("");
+  const [windowsGames, setWindows] = useState<number | ''>('');
+  const [macGames, setMac] = useState<number | ''>('');
+  const [linuxGames, setLinux] = useState<number | ''>('');
 
   const fetchGames = async () => {
     try {
-      const response = await fetch(`/api/path4`);
+      const response = await fetch(`/api/path4?developers=${devs}&publishers=${pubs}&windows_games=${windowsGames}&mac_games=${macGames}&linux_games=${linuxGames}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -40,6 +45,10 @@ export default function Path2() {
     e.preventDefault();
     fetchGames();
   };
+  
+  useEffect(() => {
+    fetchGames();
+  }, [setDevelopers, setPublishers, setWindows, setMac, setLinux]);
 
   const filterGames = (game: Game) => {
     if (showWindows) {
