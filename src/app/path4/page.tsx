@@ -12,7 +12,7 @@ interface Game {
   linux_games: number;
 }
 
-export default function Path2() {
+export default function Path4() {
   const [games, setGames] = useState<Game[]>([]);
   const [showWindows, setShowWindows] = useState<boolean>(false);
   const [showMac, setShowMac] = useState<boolean>(false);
