@@ -43,6 +43,6 @@ test.describe('Filter Games by Platform - Locator Example', () => {
 
         await filterButton.click();
 
-        await page.waitForTimeout(300);
+        await page.waitForTimeout(30000);
     });
 });
