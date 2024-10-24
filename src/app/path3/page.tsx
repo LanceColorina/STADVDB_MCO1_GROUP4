@@ -22,7 +22,6 @@ export default function Path3() {
   const [windows, setWindows] = useState<string>("True");
   const [mac, setMac] = useState<string>("True");
   const [linux, setLinux] = useState<string>("True");
-  const [searchQuery, setSearchQuery] = useState<string>(""); // New state for search query
 
   const fetchGames = async () => {
     try {
@@ -44,20 +43,12 @@ export default function Path3() {
     fetchGames();
   };
 
-  // Filter games by the search query
-  const filteredGames = games.filter((game) =>
-    game.game_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
       {/* Filter Form */}
       <form onSubmit={handleFilterSubmit} className="mb-8 w-full max-w-md">
-        {/* Release Date */}
         <div className="mb-4">
-          <label htmlFor="releaseDate" className="block text-white mb-2">
-            Release Date
-          </label>
+          <label htmlFor="releaseDate" className="block text-white mb-2">Release Date</label>
           <input
             type="date"
             id="releaseDate"
@@ -66,11 +57,8 @@ export default function Path3() {
             className="w-full p-2"
           />
         </div>
-        {/* Min Price */}
         <div className="mb-4">
-          <label htmlFor="minPrice" className="block text-white mb-2">
-            Min Price
-          </label>
+          <label htmlFor="minPrice" className="block text-white mb-2">Min Price</label>
           <input
             type="number"
             id="minPrice"
@@ -79,11 +67,8 @@ export default function Path3() {
             className="w-full p-2"
           />
         </div>
-        {/* Max Price */}
         <div className="mb-4">
-          <label htmlFor="maxPrice" className="block text-white mb-2">
-            Max Price
-          </label>
+          <label htmlFor="maxPrice" className="block text-white mb-2">Max Price</label>
           <input
             type="number"
             id="maxPrice"
@@ -92,11 +77,8 @@ export default function Path3() {
             className="w-full p-2"
           />
         </div>
-        {/* Metacritic Score */}
         <div className="mb-4">
-          <label htmlFor="metacriticScore" className="block text-white mb-2">
-            Metacritic Score
-          </label>
+          <label htmlFor="metacriticScore" className="block text-white mb-2">Metacritic Score</label>
           <input
             type="number"
             id="metacriticScore"
@@ -105,29 +87,31 @@ export default function Path3() {
             className="w-full p-2"
           />
         </div>
-        {/* Platforms */}
         <div className="mb-4">
           <label className="block text-white mb-2">Platforms</label>
           <div className="flex space-x-4">
             <div>
-              <label className="text-white mr-2">Windows</label>
+              <label htmlFor="windows-checkbox" className="text-white mr-2">Windows</label>
               <input
+                id="windows-checkbox"
                 type="checkbox"
                 checked={windows === "True"}
                 onChange={() => setWindows(windows === "True" ? "False" : "True")}
               />
             </div>
             <div>
-              <label className="text-white mr-2">Mac</label>
+              <label htmlFor="mac-checkbox" className="text-white mr-2">Mac</label>
               <input
+                id="mac-checkbox"
                 type="checkbox"
                 checked={mac === "True"}
                 onChange={() => setMac(mac === "True" ? "False" : "True")}
               />
             </div>
             <div>
-              <label className="text-white mr-2">Linux</label>
+              <label htmlFor="linux-checkbox" className="text-white mr-2">Linux</label>
               <input
+                id="linux-checkbox"
                 type="checkbox"
                 checked={linux === "True"}
                 onChange={() => setLinux(linux === "True" ? "False" : "True")}
@@ -135,41 +119,25 @@ export default function Path3() {
             </div>
           </div>
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+        <button id="filter-button" type="submit" className="bg-blue-500 text-white px-4 py-2">
           Filter Games
         </button>
       </form>
 
-      {/* Search Input */}
-      {games.length != 0? <div className="mb-8 w-full max-w-md">
-        <label htmlFor="searchQuery" className="block text-white mb-2">
-          Search by Game Name
-        </label>
-        <input
-          type="text"
-          id="searchQuery"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-2"
-          placeholder="Enter game name..."
-        />
-      </div>: ""}
-      
-
       {/* Display Filtered Games */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredGames.map((game) => (
+        {games.map((game) => (
           <div className="game-card bg-gray-800 p-4 rounded" key={game.app_id}>
-            <Link href={game.website || "/"}>
+            <Link href={game.website || '/'} className="text-white">
               <img
                 src={game.header_image}
                 alt={game.game_name}
                 className="w-full h-auto mb-2"
               />
-              <h3 className="text-lg font-bold text-white">{game.game_name}</h3>
-              <p className="text-white">Release Date: {game.release_date}</p>
-              <p className="text-white">Price: ${game.price}</p>
-              <p className="text-white">Metacritic Score: {game.metacritic_score}</p>
+              <h3 className="text-lg font-bold">{game.game_name}</h3>
+              <p>Release Date: {game.release_date}</p>
+              <p>Price: ${game.price}</p>
+              <p>Metacritic Score: {game.metacritic_score}</p>
             </Link>
           </div>
         ))}
