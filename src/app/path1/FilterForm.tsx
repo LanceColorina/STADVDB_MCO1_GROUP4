@@ -26,9 +26,10 @@ const FilterForm: React.FC<FilterFormProps> = ({
   return (
     <form onSubmit={onSubmit} className="mb-4 flex flex-col space-y-4">
       <div>
-        <label className='text-white font-bold'>
+        <label htmlFor="release-date-input" className='text-white font-bold'>
           Release Date:
           <input
+            id="release-date-input"
             type="date"
             value={releaseDate}
             onChange={(e) => setReleaseDate(e.target.value)}
@@ -37,9 +38,10 @@ const FilterForm: React.FC<FilterFormProps> = ({
         </label>
       </div>
       <div>
-        <label className='text-white font-bold'>
+        <label htmlFor="min-price-input" className='text-white font-bold'>
           Min Price:
           <input
+            id="min-price-input"
             type="number"
             value={minPrice}
             onChange={(e) => setMinPrice(Number(e.target.value) || 0)}
@@ -48,9 +50,10 @@ const FilterForm: React.FC<FilterFormProps> = ({
         </label>
       </div>
       <div>
-        <label className='text-white  font-bold'>
+        <label htmlFor="max-price-input" className='text-white font-bold'>
           Max Price:
           <input
+            id="max-price-input"
             type="number"
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value) || 0)}
@@ -59,9 +62,10 @@ const FilterForm: React.FC<FilterFormProps> = ({
         </label>
       </div>
       <div>
-        <label className='text-white font-bold'>
+        <label htmlFor="min-playtime-input" className='text-white font-bold'>
           Min Average Playtime:
           <input
+            id="min-playtime-input"
             type="number"
             value={minPlaytime}
             onChange={(e) => setMinPlaytime(Number(e.target.value) || 0)}
@@ -70,8 +74,9 @@ const FilterForm: React.FC<FilterFormProps> = ({
         </label>
       </div>
       <button
+        id="apply-filters-button"
         type="submit"
-        className="mt-4 p-2 bg-blue-500 text-black  rounded shadow"
+        className="mt-4 p-2 bg-blue-500 text-black rounded shadow"
       >
         Apply Filters
       </button>
