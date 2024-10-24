@@ -79,8 +79,9 @@ export default function Path4() {
           <label className="filter-label">Platforms</label>
           <div className="filter-options">
             <div>
-              <label className="filter-checkbox-label">Windows</label>
+              <label htmlFor="windows-checkbox" className="filter-checkbox-label">Windows</label>
               <input
+                id="windows-checkbox"
                 type="checkbox"
                 checked={showWindows}
                 onChange={() => setShowWindows(!showWindows)}
@@ -89,6 +90,7 @@ export default function Path4() {
               {showWindows && (
                 <div className="filter-range">
                   <input
+                    id="windows-min"
                     type="number"
                     placeholder="Min"
                     value={minWindows}
@@ -96,6 +98,7 @@ export default function Path4() {
                     className="filter-input"
                   />
                   <input
+                    id="windows-max"
                     type="number"
                     placeholder="Max"
                     value={maxWindows}
@@ -106,8 +109,9 @@ export default function Path4() {
               )}
             </div>
             <div>
-              <label className="filter-checkbox-label">Mac</label>
+              <label htmlFor="mac-checkbox" className="filter-checkbox-label">Mac</label>
               <input
+                id="mac-checkbox"
                 type="checkbox"
                 checked={showMac}
                 onChange={() => setShowMac(!showMac)}
@@ -116,6 +120,7 @@ export default function Path4() {
               {showMac && (
                 <div className="filter-range">
                   <input
+                    id="mac-min"
                     type="number"
                     placeholder="Min"
                     value={minMac}
@@ -123,6 +128,7 @@ export default function Path4() {
                     className="filter-input"
                   />
                   <input
+                    id="mac-max"
                     type="number"
                     placeholder="Max"
                     value={maxMac}
@@ -133,8 +139,9 @@ export default function Path4() {
               )}
             </div>
             <div>
-              <label className="filter-checkbox-label">Linux</label>
+              <label htmlFor="linux-checkbox" className="filter-checkbox-label">Linux</label>
               <input
+                id="linux-checkbox"
                 type="checkbox"
                 checked={showLinux}
                 onChange={() => setShowLinux(!showLinux)}
@@ -143,6 +150,7 @@ export default function Path4() {
               {showLinux && (
                 <div className="filter-range">
                   <input
+                    id="linux-min"
                     type="number"
                     placeholder="Min"
                     value={minLinux}
@@ -150,6 +158,7 @@ export default function Path4() {
                     className="filter-input"
                   />
                   <input
+                    id="linux-max"
                     type="number"
                     placeholder="Max"
                     value={maxLinux}
@@ -161,7 +170,7 @@ export default function Path4() {
             </div>
           </div>
         </div>
-        <button type="submit" className="filter-button">
+        <button id="filter-button" type="submit" className="filter-button">
           Filter Games
         </button>
       </form>
