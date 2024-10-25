@@ -22,6 +22,7 @@ export default function Path3() {
   const [windows, setWindows] = useState<string>("True");
   const [mac, setMac] = useState<string>("True");
   const [linux, setLinux] = useState<string>("True");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const fetchGames = async () => {
     try {
@@ -43,6 +44,11 @@ export default function Path3() {
     fetchGames();
   };
 
+  // Filter games based on search query
+  const filteredGames = games.filter(game =>
+    game.game_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
       {/* Filter Form */}
@@ -54,7 +60,7 @@ export default function Path3() {
             id="releaseDate"
             value={releaseDate}
             onChange={(e) => setReleaseDate(e.target.value)}
-            className="w-full p-2"
+            className="w-full p-2 rounded bg-gray-700 text-white"
           />
         </div>
         <div className="mb-4">
@@ -64,7 +70,7 @@ export default function Path3() {
             id="minPrice"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
-            className="w-full p-2"
+            className="w-full p-2 rounded bg-gray-700 text-white"
           />
         </div>
         <div className="mb-4">
@@ -74,7 +80,7 @@ export default function Path3() {
             id="maxPrice"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
-            className="w-full p-2"
+            className="w-full p-2 rounded bg-gray-700 text-white"
           />
         </div>
         <div className="mb-4">
@@ -84,7 +90,7 @@ export default function Path3() {
             id="metacriticScore"
             value={metacriticScore}
             onChange={(e) => setMetacriticScore(e.target.value)}
-            className="w-full p-2"
+            className="w-full p-2 rounded bg-gray-700 text-white"
           />
         </div>
         <div className="mb-4">
@@ -124,11 +130,24 @@ export default function Path3() {
         </button>
       </form>
 
+      {/* Search Bar (only shows if games are loaded) */}
+      {games.length > 0 && (
+        <div className="mb-8 w-full max-w-md">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search games..."
+            className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
+          />
+        </div>
+      )}
+
       {/* Display Filtered Games */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {games.map((game) => (
+        {filteredGames.map((game) => (
           <div className="game-card bg-gray-800 p-4 rounded" key={game.app_id}>
-            <Link href={game.website || '/'} className="text-white">
+            <Link href={game.website || `https://store.steampowered.com/search/?term=${game.game_name}`} className="text-white">
               <img
                 src={game.header_image}
                 alt={game.game_name}
@@ -145,3 +164,4 @@ export default function Path3() {
     </div>
   );
 }
+

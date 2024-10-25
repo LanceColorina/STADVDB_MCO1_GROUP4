@@ -30,7 +30,21 @@ export async function GET(req: NextRequest) {
                         AND (s.average_playtime_forever >= ? OR ? IS NULL) -- filter for average playtime
                         ORDER BY s.average_playtime_forever DESC, f.positive DESC
                         LIMIT 10;`;
-
+                // const sql = `SELECT gi.game_name, 
+        //                 gi.header_image, 
+        //                 gi.website, 
+        //                 gi.release_date, 
+        //                 gi.price, 
+        //                 s.average_playtime_forever, 
+        //                 f.positive, 
+        //                 (f.positive + f.negative) AS total_feedback,
+        //                 (f.positive / (f.positive + f.negative)) * 100 AS positive_feedback_percentage
+        //             FROM games g
+        //             JOIN (SELECT game_info_id, game_name, header_image, website, release_date, price FROM games_info WHERE ((release_date >= ? OR ? IS NULL) AND (price BETWEEN ? AND ? OR ? IS NULL))) gi ON g.game_info_id = gi.game_info_id
+        //             JOIN (SELECT statistic_id, average_playtime_forever FROM statistics WHERE average_playtime_forever > ? OR ? IS NULL) s ON g.statistic_id = s.statistic_id
+        //             JOIN (SELECT feedback_id, positive, negative FROM feedbacks WHERE (positive + negative) > 0 ) f ON g.feedback_id = f.feedback_id
+        //             ORDER BY s.average_playtime_forever DESC, f.positive DESC
+        //             LIMIT 10;`;
         const [games] = await db.query(sql, [
             date, date, 
             minPrice, maxPrice, minPrice, maxPrice, 

@@ -4,6 +4,18 @@ import { useState } from "react";
 import FilterForm from './FilterForm';
 import GameCard from './GameCard';
 import GameGraph from './GameGraph';
+interface Game {
+  app_id: number;
+  game_name: string;
+  header_image: string;
+  website: string;
+  release_date: string;
+  price: number;
+  average_playtime_forever: number;
+  positive: number;
+  total_feedback: number;
+  positive_feedback_percentage: number;
+}
 
 interface Game {
   game_name: string;
