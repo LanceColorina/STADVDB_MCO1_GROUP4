@@ -4,6 +4,7 @@ import { useState } from "react";
 import FilterForm from './FilterForm';
 import GameCard from './GameCard';
 import GameGraph from './GameGraph';
+
 interface Game {
   app_id: number;
   game_name: string;

@@ -1,5 +1,5 @@
 "use client";
-
+import Image from 'next/image';
 import Link from "next/link";
 import { useState } from "react";
 
@@ -148,7 +148,7 @@ export default function Path3() {
         {filteredGames.map((game) => (
           <div className="game-card bg-gray-800 p-4 rounded" key={game.app_id}>
             <Link href={game.website || `https://store.steampowered.com/search/?term=${game.game_name}`} className="text-white">
-              <img
+              <Image
                 src={game.header_image}
                 alt={game.game_name}
                 className="w-full h-auto mb-2"

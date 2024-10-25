@@ -12,15 +12,11 @@ interface Game {
 
 export default function Path2() {
   const [games, setGames] = useState<Game[]>([]);
-  const [windowsPlatform, setWindows] = useState<boolean>(false); 
-  const [macPlatform, setMac] = useState<boolean>(false);         
-  const [linuxPlatform, setLinux] = useState<boolean>(false); // changed to boolean
-  const [positiveReviews, setPos] = useState<number | ''>('');
-  const [negativeReviews, setNeg] = useState<number | ''>('');
+
 
   const fetchGames = async () => {
     try {
-      const response = await fetch(`/api/path2?windows=${windowsPlatform}&mac=${macPlatform}&linux=${linuxPlatform}&total_positive_reviews=${positiveReviews}&total_negative_reviews=${negativeReviews}`);
+      const response = await fetch(`/api/path2?`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -33,7 +29,7 @@ export default function Path2() {
 
   useEffect(() => {
     fetchGames();
-  }, [windowsPlatform, macPlatform, linuxPlatform, positiveReviews, negativeReviews]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-8">

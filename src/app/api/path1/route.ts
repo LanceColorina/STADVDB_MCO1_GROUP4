@@ -7,9 +7,9 @@ export async function GET(req: NextRequest) {
         const db = await createConnection();
 
         const date = url.searchParams.get('release_date') || null;
-        const minPrice = url.searchParams.get('min_price') ? parseFloat(url.searchParams.get('min_price')) : null;
-        const maxPrice = url.searchParams.get('max_price') ? parseFloat(url.searchParams.get('max_price')) : null; 
-        const minPlaytime = url.searchParams.get('average_playtime_forever') ? parseInt(url.searchParams.get('average_playtime_forever')) : null; 
+        const minPrice = url.searchParams.get('min_price') || null;
+        const maxPrice = url.searchParams.get('max_price') || null; 
+        const minPlaytime = url.searchParams.get('average_playtime_forever') || null; 
 
         const sql = `SELECT gi.game_name AS game_name, 
                             gi.header_image AS header_image, 
