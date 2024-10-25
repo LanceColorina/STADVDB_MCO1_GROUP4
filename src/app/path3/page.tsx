@@ -151,6 +151,7 @@ export default function Path3() {
               <Image
                 src={game.header_image}
                 alt={game.game_name}
+                width={500} height={250}
                 className="w-full h-auto mb-2"
               />
               <h3 className="text-lg font-bold">{game.game_name}</h3>

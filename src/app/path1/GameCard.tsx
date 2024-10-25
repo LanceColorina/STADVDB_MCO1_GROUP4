@@ -23,7 +23,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
   return (
     <div className="game-card bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" key={game.app_id}>
     <Link href={game.website} className="text-white">
-      <Image src={game.header_image} alt={game.game_name} className="w-full h-56 object-cover" />
+      <Image src={game.header_image} alt={game.game_name} width={500} height={250}className="w-full h-56 object-cover" />
       <div className="p-4">
         <h3 className="text-xl font-bold mb-2">{game.game_name}</h3>
         <p className="text-gray-400 mb-1">Release Date: <span className="text-white">{game.release_date}</span></p>
