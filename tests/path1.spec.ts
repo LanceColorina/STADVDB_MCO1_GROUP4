@@ -5,7 +5,7 @@ test.describe('Path1 - Game Filter and Search', () => {
         await page.goto('http://localhost:3000/path1'); 
     });
 
-    test('should filter games based on criteria and display results', async ({ page }) => {
+    test('should filter games based on criteria and display results - test 1', async ({ page }) => {
         const releaseDateInput = page.locator('#release-date-input');
         const minPriceInput = page.locator('#min-price-input');
         const maxPriceInput = page.locator('#max-price-input');
@@ -19,15 +19,16 @@ test.describe('Path1 - Game Filter and Search', () => {
 
         await applyFiltersButton.click();
 
-        await page.waitForTimeout(4000);
 
         
         const gameCards = page.locator('.game-card');
+        await expect(gameCards.first()).toBeVisible({ timeout: 10000 });
+
         const visibleGames = await gameCards.count();
-        expect(visibleGames).toBeGreaterThan(0); 
+        expect(visibleGames).toBeGreaterThan(0);
     });
 
-    test('should filter games by price range only and display results', async ({ page }) => {
+    test('should filter games by price range only and display results - test 2', async ({ page }) => {
         const minPriceInput = page.locator('#min-price-input');
         const maxPriceInput = page.locator('#max-price-input');
         const applyFiltersButton = page.locator('#apply-filters-button');
@@ -37,14 +38,15 @@ test.describe('Path1 - Game Filter and Search', () => {
 
         await applyFiltersButton.click();
 
-        await page.waitForTimeout(4000);
 
         const gameCards = page.locator('.game-card');
+        await expect(gameCards.first()).toBeVisible({ timeout: 10000 });
+
         const visibleGames = await gameCards.count();
-        expect(visibleGames).toBeGreaterThan(0); 
+        expect(visibleGames).toBeGreaterThan(0);
     });
 
-    test('should filter games by release date and playtime only and display results', async ({ page }) => {
+    test('should filter games by release date and playtime only and display results - test 3', async ({ page }) => {
         const releaseDateInput = page.locator('#release-date-input');
         const minPlaytimeInput = page.locator('#min-playtime-input');
         const applyFiltersButton = page.locator('#apply-filters-button');
@@ -54,10 +56,11 @@ test.describe('Path1 - Game Filter and Search', () => {
 
         await applyFiltersButton.click();
 
-        await page.waitForTimeout(4000);
 
         const gameCards = page.locator('.game-card');
+        await expect(gameCards.first()).toBeVisible({ timeout: 10000 });
+
         const visibleGames = await gameCards.count();
-        expect(visibleGames).toBeGreaterThan(0); 
+        expect(visibleGames).toBeGreaterThan(0);
     });
 });

@@ -26,11 +26,11 @@ test.describe('Path3 - Game Filter and Search', () => {
 
         await filterButton.click();
 
-        await page.waitForTimeout(1000);
-
         const gameCards = page.locator('.game-card');
+        await expect(gameCards.first()).toBeVisible({ timeout: 10000 });
+
         const visibleGames = await gameCards.count();
-        expect(visibleGames).toBeGreaterThan(0);
+        expect(visibleGames).toBeGreaterThan(0); // Ensure there are results
     });
 
     test('should filter games by price range and metacritic score', async ({ page }) => {
@@ -45,11 +45,11 @@ test.describe('Path3 - Game Filter and Search', () => {
 
         await filterButton.click();
 
-        await page.waitForTimeout(1000);
-
         const gameCards = page.locator('.game-card');
+        await expect(gameCards.first()).toBeVisible({ timeout: 10000 });
+
         const visibleGames = await gameCards.count();
-        expect(visibleGames).toBeGreaterThan(-1);
+        expect(visibleGames).toBeGreaterThan(0);
     });
 
     test('should filter games by platforms and metacritic score', async ({ page }) => {
@@ -64,11 +64,10 @@ test.describe('Path3 - Game Filter and Search', () => {
 
         await filterButton.click();
 
-        await page.waitForTimeout(1000);
-
-
         const gameCards = page.locator('.game-card');
+        await expect(gameCards.first()).toBeVisible({ timeout: 10000 });
+
         const visibleGames = await gameCards.count();
-        expect(visibleGames).toBeGreaterThan(-1);
+        expect(visibleGames).toBeGreaterThan(0); // Ensure there are results
     });
 });
