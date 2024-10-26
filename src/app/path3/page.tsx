@@ -23,7 +23,8 @@ export default function Path3() {
   const [mac, setMac] = useState<string>("True");
   const [linux, setLinux] = useState<string>("True");
   const [searchQuery, setSearchQuery] = useState<string>("");
-
+  const [metacriticSearch, setMetacriticSearch] = useState<number | string>("");
+  const [sortOrder, setSortOrder] = useState<string>("newest");
   const fetchGames = async () => {
     try {
       const response = await fetch(
@@ -44,10 +45,18 @@ export default function Path3() {
     fetchGames();
   };
 
-  // Filter games based on search query
-  const filteredGames = games.filter(game =>
-    game.game_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter games based on both search query and Metacritic search
+  const filteredGames = games
+    .filter(game =>
+      game.game_name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (metacriticSearch === "" || game.metacritic_score >= Number(metacriticSearch))
+    )
+    .sort((a, b) => {
+      // Sort by release date based on selected order
+      const dateA = new Date(a.release_date);
+      const dateB = new Date(b.release_date);
+      return sortOrder === "newest" ? dateB.getTime() - dateA.getTime() : dateA.getTime() - dateB.getTime();
+    });
 
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
@@ -130,16 +139,37 @@ export default function Path3() {
         </button>
       </form>
 
-      {/* Search Bar (only shows if games are loaded) */}
+      {/* Search Bars (only shows if games are loaded) */}
       {games.length > 0 && (
         <div className="mb-8 w-full max-w-md">
+          {/* Game Name Search Bar */}
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search games..."
+            placeholder="Search games by name..."
             className="w-full p-2 mb-4 rounded bg-gray-700 text-white"
           />
+          {/* Metacritic Score Search Bar */}
+          <input
+            type="number"
+            value={metacriticSearch}
+            onChange={(e) => setMetacriticSearch(e.target.value)}
+            placeholder="Filter by Metacritic score..."
+            className=" p-2 mb-4 rounded bg-gray-700 text-white"
+          />
+          <div className="mb-4">
+          <label htmlFor="sortOrder" className="block text-white mb-2">Sort by Release Date</label>
+          <select
+            id="sortOrder"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="w-full p-2 rounded bg-gray-700 text-white"
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
         </div>
       )}
 
@@ -165,4 +195,3 @@ export default function Path3() {
     </div>
   );
 }
-
