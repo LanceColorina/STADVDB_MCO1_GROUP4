@@ -1,28 +1,17 @@
 "use client";
 
-import { useState} from "react";
+import { useState } from "react";
 import "./Filter.css";
 
 interface Game {
-  app_id: number;
-  developers: string;
-  publishers: string;
-  windows_games: number;
-  mac_games: number;
-  linux_games: number;
+  release_year: number;
+  total_windows_games: number;
+  total_mac_games: number;
+  total_linux_games: number;
 }
 
 export default function Path4() {
   const [games, setGames] = useState<Game[]>([]);
-  const [showWindows, setShowWindows] = useState<boolean>(false);
-  const [showMac, setShowMac] = useState<boolean>(false);
-  const [showLinux, setShowLinux] = useState<boolean>(false);
-  const [minWindows, setMinWindows] = useState<number | ''>('');
-  const [maxWindows, setMaxWindows] = useState<number | ''>('');
-  const [minMac, setMinMac] = useState<number | ''>('');
-  const [maxMac, setMaxMac] = useState<number | ''>('');
-  const [minLinux, setMinLinux] = useState<number | ''>('');
-  const [maxLinux, setMaxLinux] = useState<number | ''>('');
 
   const fetchGames = async () => {
     try {
@@ -37,165 +26,36 @@ export default function Path4() {
     }
   };
 
-  const handleFilterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchGames();
-  };
-
-  const filterGames = (game: Game) => {
-    if (showWindows) {
-      const minWin = minWindows !== '' ? minWindows : -Infinity;
-      const maxWin = maxWindows !== '' ? maxWindows : Infinity;
-      if (game.windows_games < minWin || game.windows_games > maxWin) {
-        return false;
-      }
-    }
-
-    if (showMac) {
-      const minMacVal = minMac !== '' ? minMac : -Infinity;
-      const maxMacVal = maxMac !== '' ? maxMac : Infinity;
-      if (game.mac_games < minMacVal || game.mac_games > maxMacVal) {
-        return false;
-      }
-    }
-
-    if (showLinux) {
-      const minLinuxVal = minLinux !== '' ? minLinux : -Infinity;
-      const maxLinuxVal = maxLinux !== '' ? maxLinux : Infinity;
-      if (game.linux_games < minLinuxVal || game.linux_games > maxLinuxVal) {
-        return false;
-      }
-    }
-
-    return true;
-  };
-
   return (
     <div className="page-container">
-      {/* Filter Form */}
-      <form onSubmit={handleFilterSubmit} className="filter-form">
-        <h2 className="filter-title">Filter Games by Platform</h2>
-        <div className="filter-section">
-          <label className="filter-label">Platforms</label>
-          <div className="filter-options">
-            <div>
-              <label htmlFor="windows-checkbox" className="filter-checkbox-label">Windows</label>
-              <input
-                id="windows-checkbox"
-                type="checkbox"
-                checked={showWindows}
-                onChange={() => setShowWindows(!showWindows)}
-                className="filter-checkbox"
-              />
-              {showWindows && (
-                <div className="filter-range">
-                  <input
-                    id="windows-min"
-                    type="number"
-                    placeholder="Min"
-                    value={minWindows}
-                    onChange={(e) => setMinWindows(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="filter-input"
-                  />
-                  <input
-                    id="windows-max"
-                    type="number"
-                    placeholder="Max"
-                    value={maxWindows}
-                    onChange={(e) => setMaxWindows(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="filter-input"
-                  />
-                </div>
-              )}
-            </div>
-            <div>
-              <label htmlFor="mac-checkbox" className="filter-checkbox-label">Mac</label>
-              <input
-                id="mac-checkbox"
-                type="checkbox"
-                checked={showMac}
-                onChange={() => setShowMac(!showMac)}
-                className="filter-checkbox"
-              />
-              {showMac && (
-                <div className="filter-range">
-                  <input
-                    id="mac-min"
-                    type="number"
-                    placeholder="Min"
-                    value={minMac}
-                    onChange={(e) => setMinMac(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="filter-input"
-                  />
-                  <input
-                    id="mac-max"
-                    type="number"
-                    placeholder="Max"
-                    value={maxMac}
-                    onChange={(e) => setMaxMac(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="filter-input"
-                  />
-                </div>
-              )}
-            </div>
-            <div>
-              <label htmlFor="linux-checkbox" className="filter-checkbox-label">Linux</label>
-              <input
-                id="linux-checkbox"
-                type="checkbox"
-                checked={showLinux}
-                onChange={() => setShowLinux(!showLinux)}
-                className="filter-checkbox"
-              />
-              {showLinux && (
-                <div className="filter-range">
-                  <input
-                    id="linux-min"
-                    type="number"
-                    placeholder="Min"
-                    value={minLinux}
-                    onChange={(e) => setMinLinux(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="filter-input"
-                  />
-                  <input
-                    id="linux-max"
-                    type="number"
-                    placeholder="Max"
-                    value={maxLinux}
-                    onChange={(e) => setMaxLinux(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="filter-input"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
+      <button id="fetch-button" onClick={fetchGames} className="filter-button">
+        Fetch Game Data
+      </button>
+      {games.length > 0 && (
+        <div className="table-container">
+          <h2 className="table-title">Total Games Released by Year</h2>
+          <table className="game-table">
+            <thead>
+              <tr>
+                <th>Release Year</th>
+                <th>Total Windows Games</th>
+                <th>Total Mac Games</th>
+                <th>Total Linux Games</th>
+              </tr>
+            </thead>
+            <tbody>
+              {games.map((game) => (
+                <tr key={game.release_year}>
+                  <td>{game.release_year}</td>
+                  <td>{game.total_windows_games}</td>
+                  <td>{game.total_mac_games}</td>
+                  <td>{game.total_linux_games}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <button id="filter-button" type="submit" className="filter-button">
-          Filter Games
-        </button>
-      </form>
-      {/* Display Filtered Games */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {games
-          .filter(filterGames)
-          .map((game) => (
-            <div className="game-card bg-gray-800 p-4 rounded" key={game.app_id}>
-              <div className="text-white">
-                <p>Developers: {game.developers}</p>
-                <p>Publishers: {game.publishers}</p>
-                {showWindows && game.windows_games > 0 && (
-                  <p>Windows Games: {game.windows_games}</p>
-                )}
-                {showMac && game.mac_games > 0 && (
-                  <p>Mac Games: {game.mac_games}</p>
-                )}
-                {showLinux && game.linux_games > 0 && (
-                  <p>Linux Games: {game.linux_games}</p>
-                )}
-              </div>
-            </div>
-          ))}
-      </div>
+      )}
     </div>
   );
 }
