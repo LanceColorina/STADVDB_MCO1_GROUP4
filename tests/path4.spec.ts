@@ -1,48 +1,23 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Filter Games by Platform - Locator Example', () => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto('http://localhost:3000/path4');
-    });
+test.describe('Path4 - Fetch and Display Game Data', () => {
+  test.beforeEach(async ({ page }) => {
+    // Navigate to the game filtering page
+    await page.goto('https://stadvdb-mco-1-group-4.vercel.app/path4'); // Adjust the URL as necessary
+  });
 
-    test('locate checkboxes, wait for range inputs, fill them, and click filter button', async ({ page }) => {
-        const windowsCheckbox = page.locator('#windows-checkbox');
-        const macCheckbox = page.locator('#mac-checkbox');
-        const linuxCheckbox = page.locator('#linux-checkbox');
-        const windowsMinInput = page.locator('#windows-min');
-        const windowsMaxInput = page.locator('#windows-max');
-        const macMinInput = page.locator('#mac-min');
-        const macMaxInput = page.locator('#mac-max');
-        const linuxMinInput = page.locator('#linux-min');
-        const linuxMaxInput = page.locator('#linux-max');
-        const filterButton = page.locator('#filter-button');
+  test('should fetch and display game data in the table', async ({ page }) => {
+    const fetchButton = page.locator('#fetch-button');
+    await fetchButton.click();
 
-        await windowsCheckbox.check();
-        await macCheckbox.check();
-        await linuxCheckbox.check();
-        
-        await expect(windowsCheckbox).toBeChecked();
-        await expect(macCheckbox).toBeChecked();
-        await expect(linuxCheckbox).toBeChecked();
+    await page.waitForSelector('.game-table tbody tr', { timeout: 15000 });
 
-        await windowsMinInput.waitFor({ state: 'visible' });
-        await windowsMaxInput.waitFor({ state: 'visible' });
-        await macMinInput.waitFor({ state: 'visible' });
-        await macMaxInput.waitFor({ state: 'visible' });
-        await linuxMinInput.waitFor({ state: 'visible' });
-        await linuxMaxInput.waitFor({ state: 'visible' });
+    const tableContainer = page.locator('.table-container');
+    await expect(tableContainer).toBeVisible();
 
-        await windowsMinInput.fill('1');
-        await windowsMaxInput.fill('10');
+    const tableRows = page.locator('.game-table tbody tr');
+    const rowCount = await tableRows.count();
+    expect(rowCount).toBeGreaterThan(0);
 
-        await macMinInput.fill('5');
-        await macMaxInput.fill('15');
-
-        await linuxMinInput.fill('2');
-        await linuxMaxInput.fill('8');
-
-        await filterButton.click();
-
-        await page.waitForTimeout(30000);
-    });
+  });
 });
