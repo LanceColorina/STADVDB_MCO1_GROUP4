@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Path1 - Game Filter and Search', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('http://localhost:3000/path1'); 
+        await page.goto('https://stadvdb-mco-1-group-4.vercel.app/path1'); 
     });
 
-    test('should filter games based on criteria and display results - test 1', async ({ page }) => {
+    test('filter games @releasedate = 2023-01-01, @minprice = 10, @maxprice = 50, @minplaytime = 120  - test 1', async ({ page }) => {
         const releaseDateInput = page.locator('#release-date-input');
         const minPriceInput = page.locator('#min-price-input');
         const maxPriceInput = page.locator('#max-price-input');
@@ -28,13 +28,17 @@ test.describe('Path1 - Game Filter and Search', () => {
         expect(visibleGames).toBeGreaterThan(0);
     });
 
-    test('should filter games by price range only and display results - test 2', async ({ page }) => {
+    test('should filter games @releasedate = 2017-01-01, @minprice = 10, @maxprice = 80, @minplaytime = 10 - test 2', async ({ page }) => {
+        const releaseDateInput = page.locator('#release-date-input');
         const minPriceInput = page.locator('#min-price-input');
         const maxPriceInput = page.locator('#max-price-input');
+        const minPlaytimeInput = page.locator('#min-playtime-input');
         const applyFiltersButton = page.locator('#apply-filters-button');
 
-        await minPriceInput.fill('20'); 
-        await maxPriceInput.fill('70'); 
+        await releaseDateInput.fill('2017-01-01');
+        await minPriceInput.fill('10'); 
+        await maxPriceInput.fill('80'); 
+        await minPlaytimeInput.fill('10');  
 
         await applyFiltersButton.click();
 
@@ -46,13 +50,17 @@ test.describe('Path1 - Game Filter and Search', () => {
         expect(visibleGames).toBeGreaterThan(0);
     });
 
-    test('should filter games by release date and playtime only and display results - test 3', async ({ page }) => {
+    test('should filter games @releasedate = 2010-01-01, @minprice = 2, @maxprice = 30, @minplaytime = 50 - test 3', async ({ page }) => {
         const releaseDateInput = page.locator('#release-date-input');
+        const minPriceInput = page.locator('#min-price-input');
+        const maxPriceInput = page.locator('#max-price-input');
         const minPlaytimeInput = page.locator('#min-playtime-input');
         const applyFiltersButton = page.locator('#apply-filters-button');
 
-        await releaseDateInput.fill('2022-06-01');
-        await minPlaytimeInput.fill('60');
+        await releaseDateInput.fill('2010-01-01');
+        await minPriceInput.fill('2'); 
+        await maxPriceInput.fill('30'); 
+        await minPlaytimeInput.fill('50'); 
 
         await applyFiltersButton.click();
 
