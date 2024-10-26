@@ -5,7 +5,7 @@ test.describe('Path3 - Game Filter and Search', () => {
         await page.goto('https://stadvdb-mco-1-group-4.vercel.app/path3'); 
     });
 
-    test('should filter games by criteria and search by game name', async ({ page }) => {
+    test('should filter games - test 1', async ({ page }) => {
         const releaseDateInput = page.locator('#releaseDate');
         const minPriceInput = page.locator('#minPrice');
         const maxPriceInput = page.locator('#maxPrice');
@@ -33,7 +33,7 @@ test.describe('Path3 - Game Filter and Search', () => {
         expect(visibleGames).toBeGreaterThan(0); // Ensure there are results
     });
 
-    test('should filter games by price range and metacritic score', async ({ page }) => {
+    test('should filter games - test 2', async ({ page }) => {
         const minPriceInput = page.locator('#minPrice');
         const maxPriceInput = page.locator('#maxPrice');
         const metacriticScoreInput = page.locator('#metacriticScore');
@@ -54,7 +54,7 @@ test.describe('Path3 - Game Filter and Search', () => {
         expect(visibleGames).toBeGreaterThan(0);
     });
 
-    test('should filter games by platforms and metacritic score', async ({ page }) => {
+    test('should filter games - test 3', async ({ page }) => {
         const releaseDateInput = page.locator('#releaseDate');
         const metacriticScoreInput = page.locator('#metacriticScore');
         const minPriceInput = page.locator('#minPrice');
