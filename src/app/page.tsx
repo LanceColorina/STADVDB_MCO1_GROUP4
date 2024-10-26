@@ -41,7 +41,7 @@ export default function Home() {
             </Link>
             <Link href="/path4" >
               <button className=" w-[1100px] px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 m-2">
-              Games developed and published by each developer/publisher, categorized by their availability on Windows, Mac, and Linux platforms
+              Popularity of various gaming platforms (Windows, Mac, Linux) over different years based on the total number of games released on each platform
               </button>
             </Link>
           </div>
